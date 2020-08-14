@@ -1,0 +1,228 @@
+# i3 config file (v4)
+
+#   /$$  /$$$$$$                                       /$$$$$$  /$$          
+#  |__/ /$$__  $$                                     /$$__  $$|__/          
+#   /$$|__/  \ $$        /$$$$$$$  /$$$$$$  /$$$$$$$ | $$  \__/ /$$  /$$$$$$ 
+#  | $$   /$$$$$/       /$$_____/ /$$__  $$| $$__  $$| $$$$    | $$ /$$__  $$
+#  | $$  |___  $$      | $$      | $$  \ $$| $$  \ $$| $$_/    | $$| $$  \ $$
+#  | $$ /$$  \ $$      | $$      | $$  | $$| $$  | $$| $$      | $$| $$  | $$
+#  | $$|  $$$$$$/      |  $$$$$$$|  $$$$$$/| $$  | $$| $$      | $$|  $$$$$$$
+#  |__/ \______/        \_______/ \______/ |__/  |__/|__/      |__/ \____  $$
+#                                                                   /$$  \ $$
+#  MEMORIASIT DOTFILES                                             |  $$$$$$/
+#  I3WM                                                             \______/
+
+#	>>>  GLOBAL VARIABLES	<<< 
+# >_Mod Key
+set $mod Mod1
+
+# >_Apps
+set $browser	firefox
+#set $music  	TODO
+#set $term   	TODO
+#set $code      TODO
+
+# >_Workspaces
+set $ws1 "1: "
+set $ws2 "2: "
+set $ws3 "3: "
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+# >_VIM Arrows 
+set $up k
+set $down j
+set $left l
+set $right h
+
+
+#	>>>	 SETTINGS	<<< 
+# Font used
+font pango:monospace 8
+
+# >_Change Delay of Key Repeat
+exec_always --no-startup-id xset r rate 220 40
+
+# >_Log out 
+bindsym $mod+Shift+p exec "i3-nagbar -t warning -m 'Want to log out?' -b 'Yes, exit i3' 'i3-msg exit'"
+
+# >_Borders
+set $thick 5 
+set $thin  3
+border_radius 3
+title_align center
+
+	# Default Border
+for_window [class="^.*"] border pixel $thin
+for_window [title="^.*"] border pixel $thin
+
+	# App Borders
+for_window [class="$code"] border pixel $thick
+for_window [class="XTerm"] border pixel $thick
+
+
+# >_Gap
+set $inner 32 
+set $outer 0
+
+	# Set Gaps
+gaps inner $inner
+gaps outer $outer
+
+# Toggle gaps
+bindsym $mod+g exec compton; gaps inner all set $inner; gaps outer all set $outer
+bindsym $mod+Ctrl+g exec compton; gaps inner all set 0; gaps outer all set 0
+
+
+# >_Dont change focus with mouse
+focus_follows_mouse no
+
+
+#	>>>	PRODUCTIVITY	<<<
+
+#	>>_Focus<< 
+# >_Change Focused Window
+# Vim Setup
+bindsym $mod+$left focus right
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus left 
+
+
+# >_Move Focused Window
+# Vim Setup
+bindsym $mod+Shift+$right move right
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up 
+bindsym $mod+Shift+$left move left
+
+
+# NetworkManager 
+exec --no-startup-id nm-applet
+
+# >_PulseAudio
+# TODO Media buttons change
+set $refresh_i3status killall -SIGUSR1 i3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+
+#	>>>	  SHORCUTS	<<<
+# >_Firefox
+bindsym Mod1+shift+f exec firefox
+assign [class="Firefox"] $ws1 
+
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# start a terminal
+bindsym $mod+Return exec i3-sensible-terminal
+
+
+# Start Dmenu (a program launcher)
+# TODO change to rofi setup
+bindsym $mod+d exec dmenu_run
+
+# Fullscreen mode 
+bindsym $mod+f fullscreen toggle
+
+# Container Layout (stacked, tabbed, toggle split)
+bindsym $mod+w layout toggle split
+bindsym $mod+Ctrl+w layout stacked
+bindsym $mod+Shift+w layout tabbed
+
+# Toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# Change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+#bindsym $mod+a focus parent
+
+# focus the child container
+#bindsym $mod+d focus child
+
+#	>>>	  WORKSPACES	<<<
+exec i3-msg workspace $ws1
+
+# switch to workspace
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+bindsym $mod+0 workspace number $ws10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9
+bindsym $mod+Shift+0 move container to workspace number $ws10
+
+# Resize Window Mode
+mode "resize" {
+        bindsym $up    resize shrink height 10 px or 10 ppt
+        bindsym $down  resize grow   height 10 px or 10 ppt
+        bindsym $left  resize grow   width 10 px or 10 ppt
+        bindsym $right resize shrink width 10 px or 10 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape or $mod+r
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+r mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+
+#	>>>  Status Bar  <<< 
+# TODO change bar
+bar {
+        status_command i3status
+}
+
+
+#	>>>   Fibonacci Open windows   <<< 
+# Start in opposite orientation from your monitor
+default_orientation vertical 
+# Toggles split at each new window
+for_window [class=".*"] split toggle 
+# Kill command resets the split
+bindsym $mod+shift+q split toggle kill 
+
+
+#	>>>  Startup  <<< 
+# TODO compton and dunst
+
+
+#	>>> i3 Reload  <<< 
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+
+
