@@ -23,16 +23,16 @@ set $browser	firefox
 #set $code      TODO
 
 # >_Workspaces
-set $ws1 "1一"
-set $ws2 "2二"
-set $ws3 "3三"
+set $ws1 "1 一"
+set $ws2 "2 二"
+set $ws3 "3 三"
 set $ws4 "4 四"
-set $ws5 "5五"
-set $ws6 "6六"
-set $ws7 "7七"
-set $ws8 "8八"
-set $ws9 "9九"
-set $ws10 "10十"
+set $ws5 "5 五"
+set $ws6 "6 六"
+set $ws7 "7 七"
+set $ws8 "8 八"
+set $ws9 "9 九"
+set $ws10 "10 十"
 
 #set $ws2 "2: "
 #set $ws3 "3: "
@@ -229,9 +229,14 @@ bindsym $mod+shift+q split toggle kill
 #	>>>  Startup  <<< 
 # TODO compton and dunst
 
+# Background and colors
+exec "wal -n -i ~/Downloads/2.jpg --backend colorz"    
+exec "feh --bg-tile ~/Downloads/2.jpg"
+
 # Keyboard layout
+# Remember I have caps lock with both shifts lol
 exec "setxkbmap -layout us,es -variant intl"
-setxkbmap -option 'grp:win_space_toggle'
+exec "setxkbmap -option 'grp:win_space_toggle'"
 
 #	>>> i3 Reload  <<< 
 # reload the configuration file
