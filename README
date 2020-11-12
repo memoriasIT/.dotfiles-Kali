@@ -1,0 +1,17 @@
+sorry for the awful readme, will elaborate .· ´𝓈𝑜𝑜𝓃☆´¨) ¸.·*¨
+
+dots are managed with dotfiles, default target is the home folder
+if this is extracted into the home folder no problems, else you have to specify with 
+
+stow -t "$HOME"
+
+
+pro tip
+dont fuck your whole config folder by testing with -nv flags e.g.
+
+stow -nv -t "$HOME"
+
+after you checked that it does what you want you can remove the -n flag
+
+also I installed this gtk theme
+https://www.xfce-look.org/p/1297351/
