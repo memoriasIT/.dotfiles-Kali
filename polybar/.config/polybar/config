@@ -1,0 +1,400 @@
+;╔═╗╔═╗╦ ╦ ╦╔╗ ╔═╗╦═╗
+;╠═╝║ ║║ ╚╦╝╠╩╗╠═╣╠╦╝
+;╩  ╚═╝╩═╝╩ ╚═╝╩ ╩╩╚═
+
+[colors]
+
+include-file = ~/.config/polybar/color
+
+# ----- BAR ----- #
+
+[bar/Main]
+monitor = ${env:MONITOR:}
+width = 100%
+height =20 
+offset-x = 0
+offset-y = 0
+radius = 0.0
+fixed-center = true
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 9
+line-color = #f00
+
+#border-size = 0
+#border-color = #af2d2d
+border-bottom-size = 0
+border-color = ${colors.workspaces}
+
+padding-left = 0
+padding-right = 0
+
+module-margin = 0
+
+font-0 = Material Design Icons:style=Regular:size=8;2
+font-1 = FuraCode Nerd Font:style=Medium:size=15;3
+font-3 = FontAwesome:style=Regular:size=3;2
+
+
+
+;left2 left3 cmus left5 net
+
+modules-left = left-back-1 left2 workspaces left3 title left5 
+;modules-center =
+modules-right = right-front-1 cpu right-front-2 memory right-front-3 pulseaudio right-front-2 right-front-3 date right-back-1
+
+tray-position = none
+tray-padding = 2
+;tray-transparent = true
+;tray-background = #0063ff
+wm-restack = bspwm
+;wm-restack = i3
+override-redirect = false
+;scroll-up = bspwm-desknext
+;scroll-down = bspwm-deskprev
+;scroll-up = i3wm-wsnext
+;scroll-down = i3wm-wsprev
+
+#-----modules-----#
+
+[module/workspaces]
+type = internal/xworkspaces
+pin-workspaces = false
+enable-click = true
+enable-scroll = true
+
+format-padding = 3
+format = <label-state>
+
+label-active = %name%
+label-active-padding = 2
+label-active-foreground = ${colors.background}
+label-active-background = ${colors.foreground}
+;label-active-underline = ${colors.foreground}
+
+label-occupied = %name%
+label-occupied-padding = 2
+label-occupied-underline = ${colors.foreground}
+label-occupied-background = ${colors.background}
+
+label-urgent = %name%
+label-urgent-padding = 2
+label-urgent-foreground = ${colors.foreground}
+label-urgent-background = ${colors.background}
+label-urgent-underline = ${colors.foreground-alt}
+
+label-empty = %name%
+label-empty-padding = 2
+label-empty-foreground = ${colors.foreground}
+label-empty-background = ${colors.background}
+
+
+
+;[module/bspwm]
+;type = internal/bspwm
+;
+;format = <label-state>
+;
+;label-focused = %name%
+;label-focused-foreground = ${colors.focused}
+;label-focused-background = ${colors.left2}
+;label-focused-overline = ${colors.workspaces}
+;label-focused-padding = 2
+;
+;label-occupied = %name%
+;label-occupied-padding = 2
+;label-occupied-background = ${colors.left2}
+;label-occupied-foreground = ${colors.occu}
+;
+;label-urgent = %name%
+;label-urgent-padding = 2
+;label-urgent-background = ${colors.left2}
+;label-urgent-foreground = ${colors.alert}
+;
+;label-empty = %name%
+;label-empty-padding = 2
+;label-empty-background = ${colors.left2}
+;label-empty-foreground = ${colors.empty}
+
+;[module/text]
+;type = custom/text
+;content = 󰣇
+;content-background = ${colors.left1}
+;content-foreground = ${colors.foreground-alt}
+;content-padding = 1
+
+[module/title]
+type = internal/xwindow
+format = <label>
+format-background = ${colors.left1}
+format-foreground = ${colors.foreground-alt}
+format-padding = 1
+label = %title%
+label-maxlen = 30
+format-prefix = " "
+
+[module/cpu]
+type = internal/cpu
+interval = 10
+label = "%percentage%%  "
+format-prefix = "  "
+format-background = ${colors.right1}
+format-foreground = ${colors.foreground-alt}
+
+[module/memory]
+format-prefix = " RAM"
+type = custom/script
+exec = ~/.config/polybar/scripts/mem.sh
+interval = 10
+format-background = ${colors.right2}
+
+[module/date]
+type = internal/date
+interval = 60
+date = " %a %d %b"
+date-alt = " %Y %a %d %b"
+time = " %I:%M "
+time-alt = "% I:%M:%S"
+format-prefix = " "
+label = "%date% | %time%"
+format-background = ${colors.right1}
+format-foreground = ${colors.foreground-alt}
+
+[module/pulseaudio]
+type = internal/pulseaudio
+format-volume = <ramp-volume> <label-volume>
+label-volume = "%percentage%%  "
+label-muted = "  muted "
+label-muted-foreground = ${colors.foreground-alt}
+label-muted-background = ${colors.right1}
+format-volume-background = ${colors.right1}
+format-volume-foreground = ${colors.foreground-alt}
+
+ramp-volume-0 = " "
+ramp-volume-1 = " "
+ramp-volume-2 = " "
+
+[module/net]
+type = internal/network
+interface = enp2s0
+interval = 10
+format-connected-prefix = " 󰁇"
+format-connected-background = ${colors.right2}
+format-connected-padding = 0
+format-disconnected-background = ${colors.right2}
+label-connected = " %downspeed%  "
+label-disconnected = " %ifname% disconnected "
+label-disconnected-foreground = #FF0000
+
+[module/cmus]
+type = custom/script
+
+exec = ~/.config/polybar/scripts/cmus.sh
+exec-if = pgrep -x cmus
+interval = 1
+
+click-left = cmus-remote --next
+click-right = cmus-remote --prev
+click-middle = cmus-remote --pause
+scroll-up = cmus-remote --volume +5%
+scroll-down = cmus-remote --volume -5%
+
+format = <label>
+format-background = ${colors.left1}
+format-foreground = ${colors.foreground-alt}
+format-prefix = " 󰝚  "
+label = %output%
+lbel-maxlen = 70
+
+
+[global/wm]
+margin-top = 5
+margin-bottom = 5
+
+#-----right-----#
+
+[module/right-front-1]
+type = custom/text
+content-background = ${colors.background}
+content-foreground = ${colors.right1}
+content = "%{T3}%{T-}"
+
+[module/right-front-2]
+type = custom/text
+content-background = ${colors.right1}
+content-foreground = ${colors.right2}
+content = "%{T3}%{T-}"
+
+[module/right-front-3]
+type = custom/text
+content-background = ${colors.right2}
+content-foreground = ${colors.right1}
+content = "%{T3}%{T-}"
+
+#------left------#
+
+[module/left1]
+type = custom/text
+content-background = ${colors.background}
+content-foreground = ${colors.left1}
+content = "%{T3}%{T-}"
+
+[module/left2]
+type = custom/text
+content-background = ${colors.left2}
+content-foreground = ${colors.left1}
+content = "%{T3}%{T-}"
+
+[module/left3]
+type = custom/text
+content-background = ${colors.left1}
+content-foreground = ${colors.left2}
+content = "%{T3}%{T-}"
+
+[module/left4]
+type = custom/text
+content-background = ${colors.background}
+content-foreground = ${colors.left2}
+content = "%{T3}%{T-}"
+
+[module/left5]
+type = custom/text
+content-background = ${colors.background}
+content-foreground = ${colors.left1}
+content = "%{T3}%{T-}"
+
+#-----back-----#
+
+[module/right-back-1]
+type = custom/text
+content-background = ${colors.background}
+content-foreground = ${colors.right1}
+content = "%{T3}%{T-}"
+
+[module/left-back-1]
+type = custom/text
+content-background = ${colors.background}
+content-foreground = ${colors.left1}
+content = "%{T3}%{T-}"
+
+[settings]
+;screenchange-reload = false
+;compositing-background = xor
+;compositing-background = screen
+;compositing-foreground = source
+;compositing-border = over
+
+;[module/mpd]
+;type = internal/mpd
+;format-online = <label-song>
+
+;label-song-maxlen = 25
+;label-song-ellipsis = true
+
+;[module/battery]
+;type = internal/battery
+;label-volume = Bat
+;battery = BAT0
+;adapter = ADP1
+;full-at = 98
+;#format-charging-background = ${colors.right6}
+;#format-discharging-background = ${colors.right6}
+;#format-full-background = ${colors.right6}
+;#format-prefix = "    "
+;format-charging = <animation-charging> <label-charging>
+;format-discharging = <ramp-capacity> <label-discharging>
+;#format-charging-underline = #ffb52a
+;#format-discharging-underline = ${self.format-charging-underline}
+;format-full-prefix = "    "
+;#format-full-prefix-foreground = ${colors.foreground}
+;#format-full-underline = ${self.format-charging-underline}
+
+;ramp-capacity-0 = "    "
+;ramp-capacity-1 = "    "
+;ramp-capacity-2 = "    "
+;ramp-capacity-3 = "    "
+;ramp-capacity-4 = "    "
+;#ramp-capacity-foreground = ${colors.foreground}
+
+;animation-charging-0 = "    "
+;animation-charging-1 = "    "
+;animation-charging-2 = "    "
+;animation-charging-3 = "    "
+;animation-charging-4 = "    "
+;#animation-charging-foreground = ${colors.foreground}
+;animation-charging-framerate = 500
+
+;[module/i3]
+;type = internal/i3
+;format = <label-state> <label-mode>
+;index-sort = true
+;wrapping-scroll = false
+;
+;ws-icon-0 = 1;I
+;ws-icon-1 = 2;II
+;ws-icon-2 = 3;III
+;ws-icon-3 = 4;IV
+;ws-icon-4 = 5;V
+;ws-icon-5 = 6;VI
+;ws-icon-6 = 7;VII
+;ws-icon-7 = 8;VIII
+;ws-icon-8 = 9;IX
+;ws-icon-9 = 10;X
+;
+;label-mode-padding = 0
+;#label-mode-foreground = #000
+;#label-mode-background = ${colors.primary}
+;
+;#label-focused = 
+;label-focused =  %icon% 
+;label-focused-background = ${colors.right1}
+;label-focused-foreground = #e1d4f5
+;#label-focused-underline = #FFFFFF
+;label-focused-padding = 2
+;
+;label-unfocused = 
+;label-unfocused-background = ${colors.right1}
+;label-unfocused-foreground = ${colors.background}
+;#label-unfocused = " %index%"
+;label-unfocused-padding = 2
+;
+;label-visible = %icon%
+;label-visible-foreground = #FFFFFF
+;label-visible-background = ${colors.background}
+;#label-visible-underline = ${colors.background}
+;label-visible-padding = 2
+;
+;label-urgent = %icon%
+;label-urgent-foreground = ${colors.alert}
+;label-urgent-background = ${colors.right1}
+;label-urgent-padding = 2
+
+;[module/eth]
+;type = internal/network
+;interface = enp2s0
+;#interval = 3.0
+;#format-connected-underline = #55aa55
+;format-connected-prefix = " "
+;#format-connected-prefix-foreground = ${colors.foreground}
+;#label-connected = %local_ip%
+;#format-disconnected =
+;#;format-disconnected = <label-disconnected>
+;#;format-disconnected-underline = ${self.format-connected-underline}
+;#;label-disconnected = %ifname% disconnected
+;#;label-disconnected-foreground = ${colors.foreground}
+
+; [module/space]
+; format-prefix = "      "
+; type = custom/script
+; exec = ~/.config/polybar/scripts/space.sh
+; interval = 500
+
+; [module/space1]
+; format-prefix = " "
+; type = custom/script
+; exec = ~/.config/polybar/scripts/space1.sh
+; interval = 500
+
+; vim:ft=dosinia
