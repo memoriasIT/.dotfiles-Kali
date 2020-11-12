@@ -1,5 +1,3 @@
-# config file (v4)
-
 #   /$$  /$$$$$$                                       /$$$$$$  /$$          
 #  |__/ /$$__  $$                                     /$$__  $$|__/          
 #   /$$|__/  \ $$        /$$$$$$$  /$$$$$$  /$$$$$$$ | $$  \__/ /$$  /$$$$$$ 
@@ -12,237 +10,350 @@
 #  MEMORIASIT DOTFILES                                             |  $$$$$$/
 #  I3WM                                                             \______/
 
-#	>>>  GLOBAL VARIABLES	<<< 
-# >_Mod Key
-set $mod Mod1
 
-# >_Apps
-set $browser	firefox
-#set $music  	TODO
-#set $term   	TODO
-#set $code      TODO
+#	>>>  GLOBAL VARIABLES	<<< 
+
+# >_Mod Key
+
+# This _sometimes_(?) crashes the config
+set $MOD Mod1
+
 
 # >_Workspaces
-set $ws1 "1 一"
-set $ws2 "2 二"
-set $ws3 "3 三"
-set $ws4 "4 四"
-set $ws5 "5 五"
-set $ws6 "6 六"
-set $ws7 "7 七"
-set $ws8 "8 八"
-set $ws9 "9 九"
-set $ws10 "10 十"
-
-#set $ws2 "2: "
-#set $ws3 "3: "
-#set $ws4 "4"
-#set $ws5 "5"
-#set $ws6 "6"
-#set $ws7 "7"
-#set $ws8 "8"
-#set $ws9 "9"
-#set $ws10 "10"
-
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
 
 # >_VIM Arrows 
+
 set $up k
 set $down j
 set $left l
 set $right h
 
 
+
+# >_Colors
+set_from_resource $fg i3wm.color7 #f0f0f0
+set_from_resource $bg i3wm.color2 #f0f0f0
+
+
+
+#set $bg-color            #4f5b66
+#set $inactive-bg-color   #343d46
+#set $text-color          #fbf1c7
+#set $inactive-text-color #676E7D
+#set $urgent-bg-color     #bf616a
+#set $cheeky              #282828
+
+
+#	>>>	   VISUAL	<<< 
+
+# >_Font
+font pango:monospace 8 
+font pango:FontAwesome 11
+
+# >_Gaps
+for_window [class="^.*"] border pixel 3
+new_window pixel 2
+gaps inner 20
+gaps outer 10
+smart_gaps on
+hide_edge_borders both
+
+# >_Background
+exec_always --no-startup-id feh --bg-scale ~/dl/wp6.jpg
+exec_always --no-startup-id wal ~/dl/wp6.jpg
+
+# >_Bar
+exec_always --no-startup-id bash ~/.config/polybar/launch.sh
+
+# >_Window
+# General
+default_orientation horizontal
+hide_edge_borders both
+
+# Colors                border              background         text                 indicator
+client.focused          $text-color        $bg-color          $text-color          $bg-color
+client.unfocused        $inactive-bg-color $inactive-bg-color $inactive-text-color $bg-color
+client.focused_inactive $inactive-bg-color $inactive-bg-color $inactive-text-color $bg-color
+client.urgent $urgent-bg-color $urgent-bg-color $text-color $bg-color
+
+
+
+
+
+
+
 #	>>>	 SETTINGS	<<< 
-# Font used
-font pango:monospace 8
+
+	
+# >_Change ESC for CAPS LOCK (VIM Setup)
+#exec_always --no-startup-id setxkbmap -option caps:swapescape
 
 # >_Change Delay of Key Repeat
 exec_always --no-startup-id xset r rate 220 40
 
+# >_Reload the Configuration File
+bindsym Mod1+Shift+c reload
+
+# >_Restart i3 
+bindsym Mod1+Shift+r restart
+
 # >_Log out 
-bindsym $mod+Shift+p exec "i3-nagbar -t warning -m 'Want to log out?' -b 'Yes, exit i3' 'i3-msg exit'"
+bindsym Mod1+Shift+e exec "i3-nagbar -t warning -m 'Want to log out?' -b 'Yes, exit i3' 'i3-msg exit'"
 
-# >_Borders
-set $thick 5 
-set $thin  3
-border_radius 3
-title_align center
+# >_Start i3bar to display a workspace bar 
+#bar {
+#        status_command i3status
+#}
 
-	# Default Border
-for_window [class="^.*"] border pixel $thin
-for_window [title="^.*"] border pixel $thin
-
-	# App Borders
-for_window [class="$code"] border pixel $thick
-for_window [class="XTerm"] border pixel $thick
-
-
-# >_Gap
-set $inner 32 
-set $outer 0
-
-	# Set Gaps
-gaps inner $inner
-gaps outer $outer
-
-# Toggle gaps
-bindsym $mod+g exec compton; gaps inner all set $inner; gaps outer all set $outer
-bindsym $mod+Ctrl+g exec compton; gaps inner all set 0; gaps outer all set 0
-
-
-# >_Dont change focus with mouse
+# >_Focus without mouse
 focus_follows_mouse no
+
+
 
 
 #	>>>	PRODUCTIVITY	<<<
 
+
 #	>>_Focus<< 
 # >_Change Focused Window
 # Vim Setup
-bindsym $mod+$left focus right
-bindsym $mod+$down focus down
-bindsym $mod+$up focus up
-bindsym $mod+$right focus left 
+bindsym Mod1+$left focus left
+bindsym Mod1+$down focus down
+bindsym Mod1+$up focus up
+bindsym Mod1+$right focus right 
+# Cursor Keys (disabled cause I like to use alt +keys for firefox lulz
+# bindsym Mod1+Left focus left
+# bindsym Mod1+Down focus down
+# bindsym Mod1+Up focus up 
+# bindsym Mod1+Right focus right
 
 
 # >_Move Focused Window
 # Vim Setup
-bindsym $mod+Shift+$right move right
-bindsym $mod+Shift+$down move down
-bindsym $mod+Shift+$up move up 
-bindsym $mod+Shift+$left move left
+bindsym Mod1+Shift+$left move right
+bindsym Mod1+Shift+$down move down
+bindsym Mod1+Shift+$up move up 
+bindsym Mod1+Shift+$right move left
+# Cursor Keys
+bindsym mod1+shift+left move left
+bindsym Mod1+Shift+Down move down
+bindsym Mod1+Shift+Up move up
+bindsym Mod1+Shift+Right move right
 
 
-# NetworkManager 
-exec --no-startup-id nm-applet
+# >_Change Focus between Tiling / Floating windows
+bindsym Mod1+space focus mode_toggle
 
-# >_PulseAudio
-# TODO Media buttons change
-set $refresh_i3status killall -SIGUSR1 i3status
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+# >_Focus Parent
+bindsym Mod1+a focus parent
+
+# >_Focus Child
+#bindsym Mod1+d focus child
+
+
+
+
+
+
+
+#	>>_Window Management<<
+
+# >_Kill focused window
+bindsym Mod1+Shift+q kill
+
+
+# >_Fullscreen
+bindsym Mod1+f fullscreen toggle
+
+
+# >_Change Layout (stacked, tabbed, toggle split)
+bindym Mod1+s layout stacking
+bindsym Mod1+w layout tabbed
+bindsym Mod1+e layout toggle split
+
+# >_Toggle Tiling / Floating
+bindsym Mod1+Shift+space floating toggle
+
+# >_Move to scratchpad
+bindsym Mod1+Shift+minus move scratchpad
+
+# >_Show/Hide the focused scratchpad window.
+bindsym Mod1+minus scratchpad show
+
+
+
+
+
+
 
 #	>>>	  SHORCUTS	<<<
+
+# >_Terminal
+bindsym Mod1+Return exec mate-terminal --hide-menubar
+
+# >_Rofi
+bindsym Mod1+d exec rofi -show drun -theme flat -config ~/.config/rofi/config
+
 # >_Firefox
 bindsym Mod1+shift+f exec firefox
-assign [class="Firefox"] $ws1 
+#assign [class="Firefox"] $ws1 
+
+# >_i3lock
+bindsym Mod1+shift+x exec i3lock
 
 
-# Use Mouse+$mod to drag floating windows to their wanted position
-floating_modifier $mod
-
-# start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
 
 
-# Start Dmenu (a program launcher)
-# TODO change to rofi setup
-bindsym $mod+d exec dmenu_run
 
-# Fullscreen mode 
-bindsym $mod+f fullscreen toggle
 
-# Container Layout (stacked, tabbed, toggle split)
-bindsym $mod+w layout toggle split
-bindsym $mod+Ctrl+w layout stacked
-bindsym $mod+Shift+w layout tabbed
+#	>>>	  I3 MODES	<<<
 
-# Toggle tiling / floating
-bindsym $mod+Shift+space floating toggle
+# >_M0DE 0: Resize
 
-# Change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
-
-# focus the parent container
-#bindsym $mod+a focus parent
-
-# focus the child container
-#bindsym $mod+d focus child
-
-#	>>>	  WORKSPACES	<<<
-exec i3-msg workspace $ws1
-
-# switch to workspace
-bindsym $mod+1 workspace number $ws1
-bindsym $mod+2 workspace number $ws2
-bindsym $mod+3 workspace number $ws3
-bindsym $mod+4 workspace number $ws4
-bindsym $mod+5 workspace number $ws5
-bindsym $mod+6 workspace number $ws6
-bindsym $mod+7 workspace number $ws7
-bindsym $mod+8 workspace number $ws8
-bindsym $mod+9 workspace number $ws9
-bindsym $mod+0 workspace number $ws10
-
-# move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace number $ws1
-bindsym $mod+Shift+2 move container to workspace number $ws2
-bindsym $mod+Shift+3 move container to workspace number $ws3
-bindsym $mod+Shift+4 move container to workspace number $ws4
-bindsym $mod+Shift+5 move container to workspace number $ws5
-bindsym $mod+Shift+6 move container to workspace number $ws6
-bindsym $mod+Shift+7 move container to workspace number $ws7
-bindsym $mod+Shift+8 move container to workspace number $ws8
-bindsym $mod+Shift+9 move container to workspace number $ws9
-bindsym $mod+Shift+0 move container to workspace number $ws10
-
-# Resize Window Mode
 mode "resize" {
-        bindsym $up    resize shrink height 10 px or 10 ppt
-        bindsym $down  resize grow   height 10 px or 10 ppt
-        bindsym $left  resize grow   width 10 px or 10 ppt
-        bindsym $right resize shrink width 10 px or 10 ppt
+        # Vim Setup
+	bindsym $left       resize shrink width 10 px or 10 ppt
+        bindsym $down       resize grow height 10 px or 10 ppt
+        bindsym $up         resize shrink height 10 px or 10 ppt
+        bindsym $right      resize grow width 10 px or 10 ppt
 
-        # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
+        # Arrow Keys
+        bindsym Left        resize shrink width 10 px or 10 ppt
+        bindsym Down        resize grow height 10 px or 10 ppt
+        bindsym Up          resize shrink height 10 px or 10 ppt
+        bindsym Right       resize grow width 10 px or 10 ppt
 
-        # back to normal: Enter or Escape or $mod+r
+        # Back To Normal
         bindsym Return mode "default"
         bindsym Escape mode "default"
-        bindsym $mod+r mode "default"
+        bindsym Mod1+r mode "default"
 }
 
-bindsym $mod+r mode "resize"
+bindsym Mod1+r mode "resize"
 
 
-#	>>>  Status Bar  <<< 
-# TODO change bar
-bar {
-        status_command i3status
+# >_M0DE 1: Move
+
+bindsym $MOD+m mode "move" focus floating
+mode "move" {
+	bindsym $mod+Tab focus right
+	# Arrow Keys
+	bindsym Left  move left
+	bindsym Down  move down
+	bindsym Up    move up
+	bindsym Right move right
+	
+	# Vim Setup
+	bindsym h     move left
+	bindsym j     move down
+	bindsym k     move up
+	bindsym l     move right
+
+	# Back To Normal
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
 }
 
 
-#	>>>   Fibonacci Open windows   <<< 
-# Start in opposite orientation from your monitor
-default_orientation vertical 
-# Toggles split at each new window
-for_window [class=".*"] split toggle 
-# Kill command resets the split
-bindsym $mod+shift+q split toggle kill 
 
 
-#	>>>  Startup  <<< 
-# TODO compton and dunst
 
-# Background and colors
-exec "wal -n -i ~/Downloads/2.jpg --backend colorz"    
-exec "feh --bg-tile ~/Downloads/2.jpg"
+#	>>>	  WORKSPACES	<<<
 
-# Keyboard layout
-# Remember I have caps lock with both shifts lol
-exec "setxkbmap -layout us,es -variant intl"
-exec "setxkbmap -option 'grp:win_space_toggle'"
+# >_Switch To Workspace
+bindsym Mod1+1 workspace $ws1
+bindsym Mod1+2 workspace $ws2
+bindsym Mod1+3 workspace $ws3
+bindsym Mod1+4 workspace $ws4
+bindsym Mod1+5 workspace $ws5
+bindsym Mod1+6 workspace $ws6
+bindsym Mod1+7 workspace $ws7
+bindsym Mod1+8 workspace $ws8
+bindsym Mod1+9 workspace $ws9
+bindsym Mod1+0 workspace $ws10
 
-#	>>> i3 Reload  <<< 
-# reload the configuration file
-bindsym $mod+Shift+c reload
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r restart
+# >_Move Window To Workspace
+bindsym Mod1+Shift+1 move container to workspace $ws1
+bindsym Mod1+Shift+2 move container to workspace $ws2
+bindsym Mod1+Shift+3 move container to workspace $ws3
+bindsym Mod1+Shift+4 move container to workspace $ws4
+bindsym Mod1+Shift+5 move container to workspace $ws5
+bindsym Mod1+Shift+6 move container to workspace $ws6
+bindsym Mod1+Shift+7 move container to workspace $ws7
+bindsym Mod1+Shift+8 move container to workspace $ws8
+bindsym Mod1+Shift+9 move container to workspace $ws9
+bindsym Mod1+Shift+0 move container to workspace $ws10
+
+
+
+
+
+
+
+
+
+
+
+#	>>>	NOT WORKING?	<<<
+
+# use Mouse+Mod1 to drag floating windows to their wanted position
+floating_modifier Mod1
+
+# split in horizontal orientation
+bindsym Mod1+shift+o split h
+
+# split in vertical orientation
+bindsym Mod1+v split v
+
+
+
+
+
+
+
+#	>>>	   MEDIA	 <<<
+
+# >_Pulse Audio controls
+bindsym Control+Up exec --no-startup-id pactl set-sink-volume 0 +5% 
+bindsym Control+Down exec --no-startup-id pactl set-sink-volume 0 -5% 
+bindsym Control+F8 exec --no-startup-id pactl set-sink-mute 0 toggle 
+
+# >_Sreen brightness controls
+bindsym Control+Right exec xbacklight -inc 20 
+bindsym Control+Left exec xbacklight -dec 20 
+
+# >_Touchpad controls
+bindsym XF86TouchpadToggle exec /some/path/toggletouchpad.sh # toggle touchpad
+
+# >_Media player controls
+#bindsym Control+Home exec playerctl play
+#bindsym Control+Home exec playerctl pause
+#bindsym XF86AudioNext exec playerctl next
+#bindsym XF86AudioPrev exec playerctl previous
+
+
+
+
+
+#	>>>	   STARTUP	 <<<
+exec_always "setxkbmap -option 'shift:both_capslock'"
+exec_always "feh --randomize --bg-fill .config/wallpapers/*"
+exec_always --no-startup-id $HOME/.config/scripts/polybarLaunch.sh
+
+
+
+
+
 
 
 
